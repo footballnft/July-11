@@ -306,15 +306,7 @@ const LimitOrders = () => {
         mb={isSideFooter ? null : '24px'}
         mt={isChartExpanded ? '24px' : null}
       >
-        {!isMobile && (
-          <Flex width={isChartExpanded ? '100%' : '50%'} flexDirection="column">
-            
-            {isChartDisplayed && <Box mb="48px" />}
-            <Box width="100%">
-              <LimitOrderTable isCompact={isTablet} />
-            </Box>
-          </Flex>
-        )}
+        
         <Flex flexDirection="column" alignItems="center">
           <StyledSwapContainer $isChartExpanded={false}>
             <StyledInputCurrencyWrapper>
