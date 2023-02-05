@@ -10,7 +10,6 @@ import {
   useModal,
   Flex,
   IconButton,
-  BottomDrawer,
   ArrowUpDownIcon,
   Skeleton,
   useMatchBreakpointsContext,
@@ -61,7 +60,6 @@ import {
 import CircleLoader from '../../components/Loader/CircleLoader'
 import Page from '../Page'
 import SwapWarningModal from './components/SwapWarningModal'
-import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
 import ImportTokenWarningModal from '../../components/ImportTokenWarningModal'
