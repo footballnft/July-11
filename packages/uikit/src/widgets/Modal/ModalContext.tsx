@@ -1,7 +1,9 @@
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import React, { createContext, useRef, useState, useEffect } from "react";
+import { AnimatePresence, domMax, LazyMotion, m } from "framer-motion";
+import React, { createContext, useRef, useState } from "react";
 import styled from "styled-components";
+import { mountAnimation, unmountAnimation } from "../../components/BottomDrawer/styles";
 import { Overlay } from "../../components/Overlay";
+import { useIsomorphicEffect } from "../../hooks";
 import {
   animationHandler,
   animationMap,
@@ -9,6 +11,7 @@ import {
   appearAnimation,
   disappearAnimation,
 } from "../../util/animationToolkit";
+import { ModalContainer } from "./styles";
 import { Handler } from "./types";
 
 interface ModalsContext {
@@ -20,7 +23,7 @@ interface ModalsContext {
   onDismiss: Handler;
 }
 
-const ModalWrapper = styled(m.div)`
+export const StyledModalWrapper = styled(m.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,9 +38,21 @@ const ModalWrapper = styled(m.div)`
   opacity: 0;
   &.appear {
     animation: ${appearAnimation} 0.3s ease-in-out forwards;
+    ${ModalContainer} {
+      animation: ${mountAnimation} 0.3s ease-in-out forwards;
+      ${({ theme }) => theme.mediaQueries.md} {
+        animation: none;
+      }
+    }
   }
   &.disappear {
     animation: ${disappearAnimation} 0.3s ease-in-out forwards;
+    ${ModalContainer} {
+      animation: ${unmountAnimation} 0.3s ease-in-out forwards;
+      ${({ theme }) => theme.mediaQueries.md} {
+        animation: none;
+      }
+    }
   }
 `;
 
@@ -50,14 +65,14 @@ export const Context = createContext<ModalsContext>({
   onDismiss: () => null,
 });
 
-const ModalProvider: React.FC = ({ children }) => {
+const ModalProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalNode, setModalNode] = useState<React.ReactNode>();
   const [nodeId, setNodeId] = useState("");
   const [closeOnOverlayClick, setCloseOnOverlayClick] = useState(true);
   const animationRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsomorphicEffect(() => {
     const setViewportHeight = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -98,10 +113,10 @@ const ModalProvider: React.FC = ({ children }) => {
         onDismiss: handleDismiss,
       }}
     >
-      <LazyMotion features={domAnimation}>
+      <LazyMotion features={domMax}>
         <AnimatePresence>
           {isOpen && (
-            <ModalWrapper
+            <StyledModalWrapper
               ref={animationRef}
               onAnimationStart={() => animationHandler(animationRef.current)}
               {...animationMap}
@@ -111,9 +126,10 @@ const ModalProvider: React.FC = ({ children }) => {
               <Overlay onClick={handleOverlayDismiss} />
               {React.isValidElement(modalNode) &&
                 React.cloneElement(modalNode, {
+                  // @ts-ignore
                   onDismiss: handleDismiss,
                 })}
-            </ModalWrapper>
+            </StyledModalWrapper>
           )}
         </AnimatePresence>
       </LazyMotion>

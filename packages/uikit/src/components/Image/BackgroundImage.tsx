@@ -6,11 +6,18 @@ import { BackgroundImageProps } from "./types";
 import Placeholder from "./Placeholder";
 
 const StyledBackgroundImage = styled(Wrapper)`
+  display: flex;
   background-repeat: no-repeat;
   background-size: contain;
 `;
 
-const BackgroundImage: React.FC<BackgroundImageProps> = ({ loadingPlaceholder, src, width, height, ...props }) => {
+const BackgroundImage: React.FC<React.PropsWithChildren<BackgroundImageProps>> = ({
+  loadingPlaceholder,
+  src,
+  width,
+  height,
+  ...props
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const placeholder = loadingPlaceholder || <Placeholder />;

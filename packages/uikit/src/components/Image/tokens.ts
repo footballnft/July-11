@@ -6,7 +6,7 @@ const tokens = {
     symbol: "CAKE",
     address: {
       56: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
-      97: "0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe",
+      97: "0xFa60D973F7642B748046464e165A65B7323b0DEE",
     },
     decimals: 18,
     projectLink: "https://pancakeswap.finance/",
@@ -681,7 +681,7 @@ const tokens = {
     symbol: "USDC",
     address: {
       56: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-      97: "",
+      97: "0xaB1a4d4f1D656d2450692D237fdD6C7f9146e814",
     },
     decimals: 18,
     projectLink: "https://www.centre.io/usdc",

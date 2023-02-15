@@ -15,7 +15,7 @@ export const StyledUserMenu = styled(Flex)`
   cursor: pointer;
   display: inline-flex;
   height: 32px;
-  padding-left: 40px;
+  padding-left: 32px;
   padding-right: 8px;
   position: relative;
 
@@ -67,19 +67,28 @@ const UserMenu: React.FC<UserMenuProps> = ({
   account,
   text,
   avatarSrc,
+  avatarClassName,
   variant = variants.DEFAULT,
   children,
+  disabled,
+  placement = "bottom-end",
+  recalculatePopover,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
   const [tooltipRef, setTooltipRef] = useState<HTMLDivElement | null>(null);
   const accountEllipsis = account ? `${account.substring(0, 2)}...${account.substring(account.length - 4)}` : null;
-  const { styles, attributes } = usePopper(targetRef, tooltipRef, {
+  const { styles, attributes, update } = usePopper(targetRef, tooltipRef, {
     strategy: "fixed",
-    placement: "bottom-end",
+    placement,
     modifiers: [{ name: "offset", options: { offset: [0, 0] } }],
   });
+
+  // recalculate the popover position
+  useEffect(() => {
+    if (recalculatePopover && isOpen && update) update();
+  }, [isOpen, update, recalculatePopover]);
 
   useEffect(() => {
     const showDropdownMenu = () => {
@@ -110,13 +119,15 @@ const UserMenu: React.FC<UserMenuProps> = ({
           setIsOpen((s) => !s);
         }}
       >
-        <MenuIcon avatarSrc={avatarSrc} variant={variant} />
-        <LabelText title={text || account}>{text || accountEllipsis}</LabelText>
-        <ChevronDownIcon color="text" width="24px" />
+        <MenuIcon className={avatarClassName} avatarSrc={avatarSrc} variant={variant} />
+        <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
+        {!disabled && <ChevronDownIcon color="text" width="24px" />}
       </StyledUserMenu>
-      <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
-        <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen })}</Box>
-      </Menu>
+      {!disabled && (
+        <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
+          <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen })}</Box>
+        </Menu>
+      )}
     </Flex>
   );
 };

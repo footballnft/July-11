@@ -1,17 +1,16 @@
 import React from "react";
-import { darkColors } from "../../../theme";
 import { FlexProps } from "../../Box";
 import Flex from "../../Box/Flex";
 import Dropdown from "../../Dropdown/Dropdown";
 import Link from "../../Link/Link";
 import { socials } from "../config";
 
-const SocialLinks: React.FC<FlexProps> = ({ ...props }) => (
-  <Flex {...props}>
+const SocialLinks: React.FC<React.PropsWithChildren<FlexProps>> = ({ ...props }) => (
+  <Flex {...props} data-theme="dark">
     {socials.map((social, index) => {
       const iconProps = {
         width: "20px",
-        color: darkColors.textSubtle,
+        color: "textSubtle",
         style: { cursor: "pointer" },
       };
       const Icon = social.icon;

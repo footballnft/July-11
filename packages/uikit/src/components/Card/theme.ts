@@ -1,13 +1,13 @@
+import { vars } from "@pancakeswap/ui/css/vars.css";
 import { darkColors, lightColors } from "../../theme/colors";
-import { shadows } from "../../theme/base";
 import { CardTheme } from "./types";
 
 export const light: CardTheme = {
   background: lightColors.backgroundAlt,
-  boxShadow: shadows.level1,
-  boxShadowActive: shadows.active,
-  boxShadowSuccess: shadows.success,
-  boxShadowWarning: shadows.warning,
+  boxShadow: vars.shadows.level1,
+  boxShadowActive: vars.shadows.active,
+  boxShadowSuccess: vars.shadows.success,
+  boxShadowWarning: vars.shadows.warning,
   cardHeaderBackground: {
     default: lightColors.gradients.cardHeader,
     blue: lightColors.gradients.blue,
@@ -19,10 +19,10 @@ export const light: CardTheme = {
 
 export const dark: CardTheme = {
   background: darkColors.backgroundAlt,
-  boxShadow: shadows.level1,
-  boxShadowActive: shadows.active,
-  boxShadowSuccess: shadows.success,
-  boxShadowWarning: shadows.warning,
+  boxShadow: vars.shadows.level1,
+  boxShadowActive: vars.shadows.active,
+  boxShadowSuccess: vars.shadows.success,
+  boxShadowWarning: vars.shadows.warning,
   cardHeaderBackground: {
     default: darkColors.gradients.cardHeader,
     blue: darkColors.gradients.blue,

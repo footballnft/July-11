@@ -1,7 +1,6 @@
-import React from "react";
 import noop from "lodash/noop";
 import { BrowserRouter } from "react-router-dom";
-import { renderWithTheme } from "../../testHelpers";
+import { renderWithProvider } from "../../testHelpers";
 import { Menu, menuConfig, Language } from "../../widgets/Menu";
 import { footerLinks } from "../../components/Footer/config";
 import { SubMenuItemsType } from "../../components/SubMenuItems/types";
@@ -30,7 +29,7 @@ const langs: Language[] = [...Array(20)].map((_, i) => ({
 }));
 
 it("renders correctly", () => {
-  const { asFragment } = renderWithTheme(
+  const { asFragment } = renderWithProvider(
     <BrowserRouter>
       <Menu
         isDark={false}
@@ -45,6 +44,7 @@ it("renders correctly", () => {
         activeItem="Trade"
         activeSubItem="Exchange"
         buyCakeLabel="Buy CAKE"
+        buyCakeLink="https://pancakeswap.finance/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82&chainId=56"
       >
         body
       </Menu>

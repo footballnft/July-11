@@ -55,7 +55,12 @@ const Root = styled.div<SkeletonProps>`
   min-height: 20px;
   display: block;
   background-color: ${({ theme }) => theme.colors.backgroundDisabled};
-  border-radius: ${({ variant, theme }) => (variant === VARIANT.CIRCLE ? theme.radii.circle : theme.radii.small)};
+  border-radius: ${({ variant, theme }) =>
+    variant === VARIANT.CIRCLE
+      ? theme.radii.circle
+      : variant === VARIANT.ROUND
+      ? theme.radii.default
+      : theme.radii.small};
   ${layout}
   ${space}
   ${borderRadius}
@@ -81,7 +86,11 @@ const Waves = styled(Root)`
   }
 `;
 
-const Skeleton: React.FC<SkeletonProps> = ({ variant = VARIANT.RECT, animation = ANIMATION.PULSE, ...props }) => {
+const Skeleton: React.FC<React.PropsWithChildren<SkeletonProps>> = ({
+  variant = VARIANT.RECT,
+  animation = ANIMATION.PULSE,
+  ...props
+}) => {
   if (animation === ANIMATION.WAVES) {
     return <Waves variant={variant} {...props} />;
   }
@@ -89,7 +98,7 @@ const Skeleton: React.FC<SkeletonProps> = ({ variant = VARIANT.RECT, animation =
   return <Pulse variant={variant} {...props} />;
 };
 
-export const SkeletonV2: React.FC<SkeletonV2Props> = ({
+export const SkeletonV2: React.FC<React.PropsWithChildren<SkeletonV2Props>> = ({
   variant = VARIANT.RECT,
   animation = ANIMATION.PULSE,
   isDataReady = false,

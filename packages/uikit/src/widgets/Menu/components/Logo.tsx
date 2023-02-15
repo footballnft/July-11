@@ -16,17 +16,16 @@ const blink = keyframes`
 
 const StyledLink = styled("a")`
   display: flex;
-  align-items: center;
   .mobile-icon {
     width: 32px;
-    ${({ theme }) => theme.mediaQueries.nav} {
+    ${({ theme }) => theme.mediaQueries.lg} {
       display: none;
     }
   }
   .desktop-icon {
     width: 160px;
     display: none;
-    ${({ theme }) => theme.mediaQueries.nav} {
+    ${({ theme }) => theme.mediaQueries.lg} {
       display: block;
     }
   }
@@ -43,7 +42,7 @@ const StyledLink = styled("a")`
   }
 `;
 
-const Logo: React.FC<Props> = ({ isDark, href }) => {
+const Logo: React.FC<React.PropsWithChildren<Props>> = ({ isDark, href }) => {
   const { linkComponent } = useContext(MenuContext);
   const isAbsoluteUrl = href.startsWith("http");
   const innerLogo = (
@@ -54,7 +53,7 @@ const Logo: React.FC<Props> = ({ isDark, href }) => {
   );
 
   return (
-    <Flex>
+    <Flex alignItems="center">
       {isAbsoluteUrl ? (
         <StyledLink as="a" href={href} aria-label="AmehSwap home page">
           {innerLogo}
@@ -68,4 +67,4 @@ const Logo: React.FC<Props> = ({ isDark, href }) => {
   );
 };
 
-export default React.memo(Logo, (prev, next) => prev.isDark === next.isDark);
+export default React.memo(Logo);
