@@ -22,7 +22,7 @@ const Hero = () => {
               {t('WARNING')}
             </Heading>
             <Heading as="h3" scale="lg" mb="16px">
-              {t(' NO KYC, ONLY APPLY TO TRANSACTIONS OF $50 (OR ITS EQUIVALENTS) AND BELOW, kindly purchase BEP20 tokens.')}
+              {t(' NO KYC, ONLY APPLIES TO TRANSACTIONS OF $50 (OR ITS EQUIVALENTS) AND BELOW, kindly purchase BEP20 tokens.')}
             </Heading>
           </Box>
           
