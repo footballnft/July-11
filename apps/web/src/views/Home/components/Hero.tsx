@@ -2,6 +2,8 @@ import { Button, Flex, Heading, NextLinkFromReactRouter } from '@pancakeswap/uik
 import { useAccount } from 'wagmi'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useTranslation } from '@pancakeswap/localization'
+import { ChainId } from '@pancakeswap/sdk'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import styled, { keyframes } from 'styled-components'
 import CompositeImage, { CompositeImageProps } from './CompositeImage'
 import { SlideSvgDark, SlideSvgLight } from './SlideSvg'
@@ -89,6 +91,7 @@ const starsImage: CompositeImageProps = {
 const Hero = () => {
   const { t } = useTranslation()
   const { address: account } = useAccount()
+  const { chainId } = useActiveChainId()
 
   return (
     <>
@@ -119,7 +122,7 @@ const Hero = () => {
         flexDirection={['column-reverse', null, null, 'row']}
         alignItems={['flex-end', null, null, 'center']}
         justifyContent="center"
-        mt={[account ? '280px' : '50px', null, 0]}
+        mt={[account && chainId === ChainId.BSC ? '280px' : '50px', null, 0]}
         id="homepage-hero"
       >
         <Flex flex="1" flexDirection="column">

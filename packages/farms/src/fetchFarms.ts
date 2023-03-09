@@ -291,7 +291,7 @@ const getStableFarmDynamicData = ({
   const lpTokenRatio =
     !lpTotalSupply.isZero() && !lpTokenBalanceMC.isZero() ? lpTokenBalanceMC.divUnsafe(lpTotalSupply) : FIXED_ZERO
 
-  const tokenPriceVsQuote = formatUnits(price1, token1Decimals)
+  const tokenPriceVsQuote = formatUnits(price1, token0Decimals)
 
   // Amount of quoteToken in the LP that are staked in the MC
   const quoteTokenAmountMcFixed = quoteTokenAmountTotal.mulUnsafe(lpTokenRatio)
@@ -361,7 +361,7 @@ const getFarmAllocation = ({
 
   return {
     poolWeight: poolWeight.toString(),
-    multiplier: !_allocPoint.isZero() ? `${+_allocPoint.divUnsafe(FixedNumber.from(100)).toString()}X` : `0X`,
+    multiplier: !_allocPoint.isZero() ? `${+_allocPoint.divUnsafe(FixedNumber.from(10)).toString()}X` : `0X`,
   }
 }
 

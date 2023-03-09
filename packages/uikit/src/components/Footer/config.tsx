@@ -191,7 +191,7 @@ export const socials = [
     icon: YoutubeIcon,
     href: "",
   },
-    ];
+];
 
 export const langs: Language[] = [...Array(20)].map((_, i) => ({
   code: `en${i}`,

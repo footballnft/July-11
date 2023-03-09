@@ -34,7 +34,7 @@ const BasicChart = ({
   const valueToDisplay = hoverValue || pairPrices[pairPrices.length - 1]?.value
   const { changePercentage, changeValue } = getTimeWindowChange(pairPrices)
   const isChangePositive = changeValue >= 0
-  const chartHeight = isChartExpanded ? 'calc(100vh - 220px)' : '378px'
+  const chartHeight = isChartExpanded ? 'calc(100vh - 220px)' : '320px'
   const {
     t,
     currentLanguage: { locale },
@@ -74,6 +74,7 @@ const BasicChart = ({
         alignItems={['flex-start', null, null, null, null, null, 'center']}
         justifyContent="space-between"
         px="24px"
+        flexWrap="wrap"
       >
         <Flex flexDirection="column" pt="12px">
           <PairPriceDisplay
@@ -104,6 +105,7 @@ const BasicChart = ({
           setHoverValue={setHoverValue}
           setHoverDate={setHoverDate}
           isChangePositive={isChangePositive}
+          isChartExpanded={isChartExpanded}
           timeWindow={timeWindow}
         />
       </Box>

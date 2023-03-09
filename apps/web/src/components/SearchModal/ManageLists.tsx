@@ -1,5 +1,17 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, CheckmarkIcon, CogIcon, Input, LinkExternal, Text, Toggle, useTooltip } from '@pancakeswap/uikit'
+import {
+  Button,
+  CheckmarkIcon,
+  CogIcon,
+  Input,
+  LinkExternal,
+  ListLogo,
+  Text,
+  Toggle,
+  useTooltip,
+  AutoColumn,
+  Column,
+} from '@pancakeswap/uikit'
 import { TokenList, Version } from '@pancakeswap/token-lists'
 import Card from 'components/Card'
 import { BSC_URLS, ETH_URLS, UNSUPPORTED_LIST_URLS } from 'config/constants/lists'
@@ -20,10 +32,9 @@ import { ChainId } from '@pancakeswap/sdk'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { selectorByUrlsAtom, useActiveListUrls, useAllLists, useIsListActive } from '../../state/lists/hooks'
 
-import Column, { AutoColumn } from '../Layout/Column'
 import Row, { RowBetween, RowFixed } from '../Layout/Row'
-import { ListLogo } from '../Logo'
 import { CurrencyModalView } from './types'
+import { BAD_SRCS } from '../Logo/constants'
 
 function listVersionLabel(version: Version): string {
   return `v${version.major}.${version.minor}.${version.patch}`
@@ -35,7 +46,7 @@ const Wrapper = styled(Column)`
 `
 
 const RowWrapper = styled(Row)<{ active: boolean; hasActiveTokens: boolean }>`
-  background-color: ${({ active, theme }) => (active ? `${theme.colors.success}19` : 'transparent')};
+  background-color: ${({ active, theme }) => (active ? `${theme.colors.success19}` : 'transparent')};
   border: solid 1px;
   border-color: ${({ active, theme }) => (active ? theme.colors.success : theme.colors.tertiary)};
   transition: 200ms;
@@ -114,7 +125,13 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
     >
       {tooltipVisible && tooltip}
       {list.logoURI ? (
-        <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
+        <ListLogo
+          size="40px"
+          badSrcs={BAD_SRCS}
+          style={{ marginRight: '1rem' }}
+          logoURI={list.logoURI}
+          alt={`${list.name} list logo`}
+        />
       ) : (
         <div style={{ width: '24px', height: '24px', marginRight: '1rem' }} />
       )}
@@ -291,11 +308,11 @@ function ManageLists({
         ) : null}
       </AutoColumn>
       {tempList && (
-        <AutoColumn style={{ paddingTop: 0 }}>
+        <AutoColumn style={{ marginTop: 8 }}>
           <Card padding="12px 20px">
             <RowBetween>
               <RowFixed>
-                {tempList.logoURI && <ListLogo logoURI={tempList.logoURI} size="40px" />}
+                {tempList.logoURI && <ListLogo badSrcs={BAD_SRCS} logoURI={tempList.logoURI} size="40px" />}
                 <AutoColumn gap="4px" style={{ marginLeft: '20px' }}>
                   <Text bold>{tempList.name}</Text>
                   <Text color="textSubtle" small textTransform="lowercase">

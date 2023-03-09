@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi'
 import snapshot from '@snapshot-labs/snapshot.js'
 import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
-import { PANCAKE_SPACE } from 'views/Buy/config'
+import { PANCAKE_SPACE } from 'views/Voting/config'
 import useGetVotingPower from '../../hooks/useGetVotingPower'
 import DetailsView from './DetailsView'
 import MainView from './MainView'
@@ -85,7 +85,7 @@ const CastVoteModal: React.FC<React.PropsWithChildren<CastVoteModalProps>> = ({
       onBack={handleBack}
       onDismiss={onDismiss}
       hideCloseButton={!isStartView}
-      headerBackground={theme.colors.gradients.cardHeader}
+      headerBackground={theme.colors.gradientCardHeader}
     >
       <Box mb="24px">
         {view === ConfirmVoteView.MAIN && (

@@ -12,10 +12,7 @@ import { BAD_SRCS } from './constants'
 const getTokenLogoURL = memoize(
   (token?: Token) => {
     if (token && token.chainId === ChainId.MAINNET) {
-      return `https://assets-cdn.trustwallet.com/blockchains/aptos/assets/${token.address.replaceAll(
-        ':',
-        '%253A',
-      )}/logo.png` // hex encoding
+      return `https://tokens.pancakeswap.finance/images/aptos/${token.address}.png` // hex encoding
     }
     return null
   },
@@ -34,7 +31,9 @@ export function AptosCoinLogo({ size = '24px', style }: { size?: string; style?:
   return (
     <StyledLogo
       badSrcs={BAD_SRCS}
-      className={aptosLogoClass}
+      className={aptosLogoClass({
+        isProduction: true,
+      })}
       srcs={APT_SRCS}
       alt="APT logo"
       style={style}

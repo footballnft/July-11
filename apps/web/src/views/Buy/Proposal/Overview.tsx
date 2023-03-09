@@ -1,5 +1,4 @@
-import { ArrowBackIcon, Box, Button, Flex, Heading, NotFound } from '@pancakeswap/uikit'
-import { PageMeta } from 'components/Layout/Page'
+import { ArrowBackIcon, Box, Button, Flex, Heading, NotFound, ReactMarkdown } from '@pancakeswap/uikit'
 import { getAllVotes, getProposal } from 'state/voting/helpers'
 import { useAccount } from 'wagmi'
 import useSWRImmutable from 'swr/immutable'
@@ -8,7 +7,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
 import Container from 'components/Layout/Container'
-import ReactMarkdown from 'components/ReactMarkdown'
 import PageLoader from 'components/Loader/PageLoader'
 import { FetchStatus } from 'config/constants/types'
 import { isCoreProposal } from '../helpers'
@@ -50,7 +48,6 @@ const Overview = () => {
 
   return (
     <Container py="40px">
-      <PageMeta />
       <Box mb="40px">
         <Link href="/voting" passHref>
           <Button as="a" variant="text" startIcon={<ArrowBackIcon color="primary" width="24px" />} px="0">

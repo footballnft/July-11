@@ -1,6 +1,5 @@
 import { Flex } from '@pancakeswap/uikit'
 import dynamic from 'next/dynamic'
-import { PageMeta } from 'components/Layout/Page'
 import styled from 'styled-components'
 import Hero from './components/Hero'
 
@@ -18,7 +17,6 @@ const Content = styled.div`
 const Voting = () => {
   return (
     <>
-      <PageMeta />
       <Flex flexDirection="column" minHeight="calc(100vh - 64px)">
         <Chrome>
           <Hero />

@@ -12,13 +12,12 @@
 
 import { Router } from 'itty-router'
 import { error, json, missing } from 'itty-router-extras'
+import { wrapCorsHeader, handleCors, CORS_ALLOW } from '@pancakeswap/worker-utils'
 import { fetchCakePrice, saveFarms, saveLPsAPR } from './handler'
-import { farmFetcher, handleCors, requireChainId, wrapCorsHeader } from './helper'
+import { farmFetcher, requireChainId } from './helper'
 import { FarmKV } from './kv'
 
 const router = Router()
-
-const allowedOrigin = /[^\w](pancake\.run)|(localhost:3000)|(localhost:3002)|(pancakeswap.finance)|(pancakeswap.com)$/
 
 router.get('/price/cake', async (_, event) => {
   const cache = caches.default
@@ -89,11 +88,13 @@ router.get('/:chainId', async ({ params }, event) => {
 
 router.all('*', () => missing('Not found'))
 
-router.options('*', handleCors(allowedOrigin))
+router.options('*', handleCors(CORS_ALLOW, `GET, HEAD, OPTIONS`, `referer, origin, content-type`))
 
 addEventListener('fetch', (event) =>
   event.respondWith(
-    router.handle(event.request, event).then((res) => wrapCorsHeader(event.request, res, { allowedOrigin })),
+    router
+      .handle(event.request, event)
+      .then((res) => wrapCorsHeader(event.request, res, { allowedOrigin: CORS_ALLOW })),
   ),
 )
 

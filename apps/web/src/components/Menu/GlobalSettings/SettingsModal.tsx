@@ -4,7 +4,9 @@ import {
   Box,
   Flex,
   InjectedModalProps,
+  Link,
   Modal,
+  ExpertModal,
   PancakeToggle,
   QuestionHelper,
   Text,
@@ -25,9 +27,10 @@ import {
   useUserUsernameVisibility,
   useZapModeManager,
 } from 'state/user/hooks'
+import { useUserTokenRisk } from 'state/user/hooks/useUserTokenRisk'
 import { useStableSwapByDefault } from 'state/user/smartRouter'
+import { useMMLinkedPoolByDefault } from 'state/user/mmLinkedPool'
 import styled from 'styled-components'
-import ExpertModal from './ExpertModal'
 import GasSettings from './GasSettings'
 import TransactionSettings from './TransactionSettings'
 import { SettingsMode } from './types'
@@ -77,6 +80,8 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   const { onChangeRecipient } = useSwapActionHandlers()
   const { chainId } = useActiveChainId()
   const [isStableSwapByDefault, setIsStableSwapByDefault] = useStableSwapByDefault()
+  const [isMMLinkedPoolByDefault, setIsMMLinkedPoolByDefault] = useMMLinkedPoolByDefault()
+  const [tokenRisk, setTokenRisk] = useUserTokenRisk()
 
   const { t } = useTranslation()
   const { isDark, setTheme } = useTheme()
@@ -86,6 +91,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
       <ExpertModal
         setShowConfirmExpertModal={setShowConfirmExpertModal}
         onDismiss={onDismiss}
+        toggleExpertMode={toggleExpertMode}
         setShowExpertModeAcknowledgement={setShowExpertModeAcknowledgement}
       />
     )
@@ -151,7 +157,42 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   }}
                 />
               </Flex>
-              {chainId === ChainId.BSC && <GasSettings />}
+              {chainId === ChainId.BSC && (
+                <>
+                  <Flex justifyContent="space-between" alignItems="center" mb="24px">
+                    <Flex alignItems="center">
+                      <Text>{t('Token Risk Scanning')}</Text>
+                      <QuestionHelper
+                        text={
+                          <>
+                            <Text>{t('Automatic risk scanning for the selected token')}</Text>
+                            <Text as="span">{t('Risk scan results are provided by a third party')}</Text>
+                            <Link style={{ display: 'inline' }} ml="4px" external href="https://www.avengerdao.org">
+                              AvengerDAO
+                            </Link>
+                            <Text my="8px">
+                              {t(
+                                'It is a tool for indicative purposes only to allow users to check the reference risk level of a BNB Chain Smart Contract. Please do your own research - interactions with any BNB Chain Smart Contract is at your own risk.',
+                              )}
+                            </Text>
+                          </>
+                        }
+                        placement="top-start"
+                        ml="4px"
+                      />
+                    </Flex>
+                    <Toggle
+                      id="toggle-username-visibility"
+                      checked={tokenRisk}
+                      scale="md"
+                      onChange={() => {
+                        setTokenRisk(!tokenRisk)
+                      }}
+                    />
+                  </Flex>
+                  <GasSettings />
+                </>
+              )}
             </Flex>
           </>
         )}
@@ -238,6 +279,22 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 />
               </Flex>
               <PancakeToggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
+            </Flex>
+            <Flex justifyContent="space-between" alignItems="center" mb="24px">
+              <Flex alignItems="center">
+                <Text>{t('MM Linked Pool')}</Text>
+                <QuestionHelper
+                  text={t('Trade through the market makers if they provide better deal')}
+                  placement="top-start"
+                  ml="4px"
+                />
+              </Flex>
+              <Toggle
+                id="toggle-disable-mm-button"
+                checked={isMMLinkedPoolByDefault}
+                onChange={(e) => setIsMMLinkedPoolByDefault(e.target.checked)}
+                scale="md"
+              />
             </Flex>
             <Flex justifyContent="space-between" alignItems="center" mb="24px">
               <Flex alignItems="center">

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState, useMemo, useRef, createContext } from 'react'
+import { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import BigNumber from 'bignumber.js'
 import { ChainId } from '@pancakeswap/sdk'
 import { useAccount } from 'wagmi'
@@ -27,11 +27,10 @@ import Page from 'components/Layout/Page'
 import { useFarms, usePollFarmsWithUserData, usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVaultUserData } from 'state/pools/hooks'
 import { useIntersectionObserver } from '@pancakeswap/hooks'
-import { DeserializedFarm, FarmWithStakedValue } from '@pancakeswap/farms'
+import { DeserializedFarm, FarmWithStakedValue, filterFarmsByQuery } from '@pancakeswap/farms'
 import { useTranslation } from '@pancakeswap/localization'
 import { getFarmApr } from 'utils/apr'
 import orderBy from 'lodash/orderBy'
-import { latinise } from 'utils/latinise'
 import { useUserFarmStakedOnly, useUserFarmsViewMode } from 'state/user/hooks'
 import { ViewMode } from 'state/user/actions'
 import { useRouter } from 'next/router'
@@ -39,6 +38,8 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import Table from './components/FarmTable/FarmTable'
 import { BCakeBoosterCard } from './components/BCakeBoosterCard'
 import { FarmTypesFilter } from './components/FarmTypesFilter'
+import { FarmsContext } from './context'
+import useMultiChainHarvestModal from './hooks/useMultiChainHarvestModal'
 
 const ControlContainer = styled.div`
   display: flex;
@@ -176,6 +177,8 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   usePollFarmsWithUserData()
 
+  useMultiChainHarvestModal()
+
   // Users with no wallet connected should see 0 as Earned amount
   // Connected users should see loading indicator until first userData has loaded
   const userDataReady = !account || (!!account && userDataLoaded)
@@ -226,7 +229,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   const farmsList = useCallback(
     (farmsToDisplay: DeserializedFarm[]): FarmWithStakedValue[] => {
-      let farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
+      const farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
         if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
           return farm
         }
@@ -246,14 +249,7 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
         return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
 
-      if (query) {
-        const lowercaseQuery = latinise(query.toLowerCase())
-        farmsToDisplayWithAPR = farmsToDisplayWithAPR.filter((farm: FarmWithStakedValue) => {
-          return latinise(farm.lpSymbol.toLowerCase()).includes(lowercaseQuery)
-        })
-      }
-
-      return farmsToDisplayWithAPR
+      return filterFarmsByQuery(farmsToDisplayWithAPR, query)
     },
     [query, isActive, chainId, cakePrice, regularCakePerBlock],
   )
@@ -492,7 +488,5 @@ const Farms: React.FC<React.PropsWithChildren> = ({ children }) => {
     </FarmsContext.Provider>
   )
 }
-
-export const FarmsContext = createContext({ chosenFarmsMemoized: [] })
 
 export default Farms

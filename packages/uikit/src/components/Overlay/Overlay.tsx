@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { Box, BoxProps } from "../Box";
 
 const unmountAnimation = keyframes`
@@ -26,7 +26,7 @@ const StyledOverlay = styled(Box)<{ isUnmounting?: boolean }>`
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => `${theme.colors.text}99`};
+  background-color: ${({ theme }) => `${theme.colors.text99}`};
   z-index: 20;
   will-change: opacity;
   animation: ${mountAnimation} 350ms ease forwards;
@@ -58,7 +58,7 @@ interface OverlayProps extends BoxProps {
   isUnmounting?: boolean;
 }
 
-export const Overlay: FC<React.PropsWithChildren<OverlayProps>> = (props) => {
+export const Overlay: React.FC<React.PropsWithChildren<OverlayProps>> = (props) => {
   return (
     <>
       <BodyLock />

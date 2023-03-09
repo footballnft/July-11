@@ -12,6 +12,10 @@ import {
   TooltipText,
   useTooltip,
   MessageText,
+  IconButton,
+  PencilIcon,
+  AutoColumn,
+  ColumnCenter,
 } from '@pancakeswap/uikit'
 import { logError } from 'utils/sentry'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
@@ -30,7 +34,6 @@ import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToU
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import { LightCard } from '../../components/Card'
-import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AppHeader, AppBody } from '../../components/App'
 import { MinimalPositionCard } from '../../components/PositionCard'
@@ -65,6 +68,8 @@ import { ZapCheckbox } from '../../components/CurrencyInputPanel/ZapCheckbox'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import SettingsModal from '../../components/Menu/GlobalSettings/SettingsModal'
+import { SettingsMode } from '../../components/Menu/GlobalSettings/types'
 
 enum Steps {
   Choose,
@@ -566,6 +571,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
     )
 
+  const [onPresentSettingsModal] = useModal(<SettingsModal mode={SettingsMode.SWAP_LIQUIDITY} />)
+
   return (
     <Page>
       <AppBody>
@@ -608,7 +615,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 )}
                 <CurrencyInputPanel
                   disableCurrencySelect={canZap}
-                  showBUSD
+                  showUSDPrice
                   onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
                   disabled={canZap && !zapTokenCheckedA}
@@ -647,7 +654,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   <AddIcon width="16px" />
                 </ColumnCenter>
                 <CurrencyInputPanel
-                  showBUSD
+                  showUSDPrice
                   onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
                   disabled={canZap && !zapTokenCheckedB}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_B}
@@ -793,6 +800,9 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 <RowBetween>
                   <Text bold fontSize="12px" color="secondary">
                     {t('Slippage Tolerance')}
+                    <IconButton scale="sm" variant="text" onClick={onPresentSettingsModal}>
+                      <PencilIcon color="primary" width="10px" />
+                    </IconButton>
                   </Text>
                   <Text bold color="primary">
                     {allowedSlippage / 100}%

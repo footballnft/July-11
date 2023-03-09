@@ -80,31 +80,47 @@ export function useStablePair(currencyA: Token, currencyB: Token): UseStablePair
   return { pairState: PairState.EXISTS, pair }
 }
 
-function useMintedStabelLP({
+function useMintedStableLP({
   stableSwapInfoContract,
   stableSwapConfig,
   stableSwapAddress,
   currencyInput,
   currencyInputAmount,
   currencyOutputAmount,
+}: {
+  stableSwapInfoContract: any
+  stableSwapConfig: any
+  stableSwapAddress: string
+  currencyInput: Currency | undefined
+  currencyInputAmount: JSBI | undefined
+  currencyOutputAmount: JSBI | undefined
 }) {
   const quotient0Str = currencyInputAmount?.toString() || '0'
   const quotient1Str = currencyOutputAmount?.toString() || '0'
 
-  const isToken0 = stableSwapConfig?.token0?.address === currencyInput?.address
-  const amounts = isToken0 ? [quotient0Str, quotient1Str] : [quotient1Str, quotient0Str]
+  const isToken0 = currencyInput.wrapped.equals(stableSwapConfig?.token0)
+  const amounts = useMemo(() => {
+    return isToken0 ? [quotient0Str, quotient1Str] : [quotient1Str, quotient0Str]
+  }, [isToken0, quotient0Str, quotient1Str])
+
+  const inputs = useMemo(() => {
+    return [stableSwapAddress, amounts]
+  }, [stableSwapAddress, amounts])
 
   const { result, error, loading, syncing } = useSingleCallResult(
     stableSwapInfoContract,
     'get_add_liquidity_mint_amount',
-    [stableSwapAddress, amounts],
+    inputs,
   )
 
-  return {
-    data: result?.[0],
-    loading: loading || syncing,
-    error,
-  }
+  return useMemo(
+    () => ({
+      data: result?.[0],
+      loading: loading || syncing,
+      error,
+    }),
+    [result, loading, syncing, error],
+  )
 }
 
 export function useStableLPDerivedMintInfo(
@@ -214,7 +230,7 @@ export function useStableLPDerivedMintInfo(
     data: lpMinted,
     error: estimateLPError,
     loading,
-  } = useMintedStabelLP({
+  } = useMintedStableLP({
     stableSwapAddress: stableSwapConfig?.stableSwapAddress,
     stableSwapInfoContract,
     stableSwapConfig,
@@ -264,10 +280,10 @@ export function useStableLPDerivedMintInfo(
 
   const oneCurrencyRequired =
     !parsedAmounts[Field.CURRENCY_A]?.greaterThan(0) && !parsedAmounts[Field.CURRENCY_B]?.greaterThan(0)
-  const twoCurreniesRequired =
+  const twoCurrenciesRequired =
     !parsedAmounts[Field.CURRENCY_A]?.greaterThan(0) || !parsedAmounts[Field.CURRENCY_B]?.greaterThan(0)
 
-  if (noLiquidity ? twoCurreniesRequired : oneCurrencyRequired) {
+  if (noLiquidity ? twoCurrenciesRequired : oneCurrencyRequired) {
     addError = t('Enter an amount')
   }
 

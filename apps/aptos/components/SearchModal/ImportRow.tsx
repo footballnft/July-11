@@ -9,15 +9,16 @@ import {
   RowFixed,
   AutoColumn,
   Flex,
+  ListLogo,
 } from '@pancakeswap/uikit'
 import { CurrencyLogo } from 'components/Logo/CurrencyLogo'
-import { ListLogo } from 'components/Logo'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCombinedInactiveList } from 'state/lists/hooks'
 import styled from 'styled-components'
 import { useIsUserAddedToken, useIsTokenActive } from 'hooks/Tokens'
 import { useTranslation } from '@pancakeswap/localization'
 import { APTOS_COIN } from '@pancakeswap/awgmi'
+import { BAD_SRCS } from '../Logo/constants'
 
 const TokenSection = styled.div<{ dim?: boolean }>`
   padding: 4px 20px;
@@ -41,12 +42,13 @@ const CheckIcon = styled(CheckmarkCircleIcon)`
   stroke: ${({ theme }) => theme.colors.success};
 `
 
-const NameOverflow = styled.div`
+const NameOverflow = styled(Flex)`
   white-space: nowrap;
   overflow: hidden;
+  align-items: center;
   text-overflow: ellipsis;
-  max-width: 140px;
-  font-size: 12px;
+  max-width: 210px;
+  gap: 8px;
 `
 
 export default function ImportRow({
@@ -92,27 +94,19 @@ export default function ImportRow({
       <CurrencyLogo currency={token} size={isMobile ? '20px' : '24px'} style={{ opacity: dim ? '0.6' : '1' }} />
       <AutoColumn gap="4px" style={{ opacity: dim ? '0.6' : '1' }}>
         <AutoRow>
-          <Flex
-            alignItems={isMobile && token.symbol.length > 14 ? undefined : 'center'}
-            flexDirection={isMobile && token.symbol.length > 14 ? 'column' : 'row'}
-          >
-            <Text mr="8px">{token.symbol}</Text>
-            <Text color="textDisabled">
-              <NameOverflow
-                style={!isMobile && token.symbol.length > 14 ? { maxWidth: '58px' } : {}}
-                title={token.name}
-              >
-                {token.name}
-              </NameOverflow>
+          <NameOverflow title={token.name}>
+            {token.symbol}
+            <Text ellipsis color="textDisabled" fontSize="12px">
+              {token.name}
             </Text>
-          </Flex>
+          </NameOverflow>
         </AutoRow>
         {list && list.logoURI && (
           <RowFixed>
             <Text fontSize={isMobile ? '10px' : '14px'} mr="4px" color="textSubtle">
               {t('via')} {list.name}
             </Text>
-            <ListLogo logoURI={list.logoURI} size="12px" />
+            <ListLogo badSrcs={BAD_SRCS} logoURI={list.logoURI} size="12px" />
           </RowFixed>
         )}
       </AutoColumn>

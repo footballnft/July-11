@@ -73,7 +73,7 @@ const TicketContainer = styled(Flex)`
 `
 
 const PrizeTotalBalance = styled(Balance)`
-  background: ${({ theme }) => theme.colors.gradients.gold};
+  background: ${({ theme }) => theme.colors.gradientGold};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
@@ -254,7 +254,7 @@ const Hero = () => {
         <img src="/images/lottery/ticket-l.png" width="123px" height="83px" alt="" />
         <img src="/images/lottery/ticket-r.png" width="121px" height="72px" alt="" />
       </StarsDecorations>
-      <Heading mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
+      <Heading style={{ zIndex: 1 }} mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
         {t('The PancakeSwap Lottery')}
       </Heading>
       {getHeroHeading()}

@@ -18,10 +18,13 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Fragment } from 'react'
+import { DefaultSeo } from 'next-seo'
+import { PageMeta } from 'components/Layout/Page'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { Blocklist, Updaters } from '..'
+import { SEO } from '../../next-seo.config'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
@@ -72,21 +75,18 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
           content="Experience the freedom and security of buying cryptocurrencies without the hassle of KYC!."
         />
         <meta name="theme-color" content="#1FC7D4" />
-        <meta name="twitter:image" content="https://amehswap.com/images/ameh-hero.png" />
-        <meta
-          name="twitter:description"
-          content="Experience the freedom and security of buying cryptocurrencies without the hassle of KYC! With AmehSwap, you easily purchase your favorite coins and tokens anonymously. No more waiting for credit checks or dealing with government regulations. Join the decentralized revolution and take control of your financial future today!"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="🥞 AmehSwap - The best fiat to crypto DEX" />
-        <title>AmehSwap</title>
         {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />
         )}
       </Head>
-
+      <DefaultSeo {...SEO} />
       <Providers store={store}>
+        <PageMeta />
+        {(Component as NextPageWithLayout).Meta && (
+          // @ts-ignore
+          <Component.Meta {...pageProps} />
+        )}
         <Blocklist>
           {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
           <ResetCSS />
@@ -127,6 +127,10 @@ type NextPageWithLayout = NextPage & {
    * */
   chains?: number[]
   isShowScrollToTopButton?: true
+  /**
+   * Meta component for page, hacky solution for static build page to avoid `PersistGate` which blocks the page from rendering
+   */
+  Meta?: React.FC<React.PropsWithChildren<unknown>>
 }
 
 type AppPropsWithLayout = AppProps & {

@@ -11,7 +11,7 @@ const Page = styled(Box)`
   display: flex;
   height: 100%;
   height: calc(100vh - 56px);
-  background: ${({ theme }) => theme.colors.gradients.bubblegum};
+  background: ${({ theme }) => theme.colors.gradientBubblegum};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     min-height: 1000px;

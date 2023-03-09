@@ -71,7 +71,7 @@ const WalletStatsModal: React.FC<React.PropsWithChildren<WalletStatsModalProps>>
 
   return (
     <ModalContainer $minWidth="320px">
-      <ModalHeader background={theme.colors.gradients.bubblegum}>
+      <ModalHeader background={theme.colors.gradientBubblegum}>
         <Flex alignItems="center" style={{ flex: 1 }}>
           <Box width={['64px', null, null, null, null, null, '96px']} mr="16px">
             <ProfileAvatar src={profile?.nft?.image?.thumbnail} height={96} width={96} />
@@ -82,7 +82,9 @@ const WalletStatsModal: React.FC<React.PropsWithChildren<WalletStatsModalProps>>
                 {profile?.username}
               </Heading>
             )}
-            <ExternalLink href={getBlockExploreLink(address, 'address')}>{truncateHash(address)}</ExternalLink>
+            <ExternalLink isBscScan href={getBlockExploreLink(address, 'address')}>
+              {truncateHash(address)}
+            </ExternalLink>
           </Box>
         </Flex>
         <IconButton variant="text" onClick={handleDismiss} aria-label="Close the dialog">

@@ -43,7 +43,7 @@ const CakeBenefitsCardInner = styled(Box)`
     height: 100%;
     pointer-events: none;
     border-radius: ${({ theme }) => theme.radii.default};
-    background: ${({ theme }) => theme.colors.gradients.bubblegum};
+    background: ${({ theme }) => theme.colors.gradientBubblegum};
   }
 `
 

@@ -1,7 +1,7 @@
 {
   "short_name": "AmehSwap",
   "name": "AmehSwap",
-  "description": "Buy crypto with Fiat, with little verification",
+  "description": "Buy crypto with Fiat, with no KYC",
   "homepage_url": "https://amehswap.com",
   "start_url": ".",
   "display": "standalone",

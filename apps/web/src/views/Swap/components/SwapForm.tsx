@@ -1,6 +1,16 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, NATIVE, Percent } from '@pancakeswap/sdk'
-import { ArrowDownIcon, Box, Button, Message, MessageText, Skeleton, Swap as SwapUI } from '@pancakeswap/uikit'
+import {
+  ArrowDownIcon,
+  AutoColumn,
+  Box,
+  Button,
+  Message,
+  MessageText,
+  Skeleton,
+  Swap as SwapUI,
+  useModal,
+} from '@pancakeswap/uikit'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -10,7 +20,6 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 import AccessRisk from 'views/Swap/components/AccessRisk'
 
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
-import { AutoColumn } from 'components/Layout/Column'
 import { AutoRow } from 'components/Layout/Row'
 import { CommonBasesType } from 'components/SearchModal/types'
 
@@ -26,12 +35,14 @@ import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { currencyId } from 'utils/currencyId'
 
 import { useAtomValue } from 'jotai'
+import { useStableSwapPairs } from 'state/swap/useStableSwapPairs'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from 'utils/exchange'
+import SettingsModal from '../../../components/Menu/GlobalSettings/SettingsModal'
+import { SettingsMode } from '../../../components/Menu/GlobalSettings/types'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
 import { isAddress } from '../../../utils'
 import useRefreshBlockNumberID from '../hooks/useRefreshBlockNumber'
 import useWarningImport from '../hooks/useWarningImport'
-import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import AddressInputPanel from './AddressInputPanel'
 import AdvancedSwapDetailsDropdown from './AdvancedSwapDetailsDropdown'
@@ -43,7 +54,7 @@ export default function SwapForm() {
   const { isAccessTokenSupported } = useContext(SwapFeaturesContext)
   const { t } = useTranslation()
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
-  const stableFarms = useStableFarms()
+  const stablePairs = useStableSwapPairs()
   const warningSwapHandler = useWarningImport()
   const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
 
@@ -66,15 +77,15 @@ export default function SwapForm() {
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
   const hasStableSwapAlternative = useMemo(() => {
-    return stableFarms.some((stableFarm) => {
-      const checkSummedToken0 = isAddress(stableFarm?.token0.address)
-      const checkSummedToken1 = isAddress(stableFarm?.token1.address)
+    return stablePairs.some((stablePair) => {
+      const checkSummedToken0 = isAddress(stablePair?.token0.wrapped.address)
+      const checkSummedToken1 = isAddress(stablePair?.token1.wrapped.address)
       return (
         (checkSummedToken0 === inputCurrencyId || checkSummedToken0 === outputCurrencyId) &&
         (checkSummedToken1 === inputCurrencyId || checkSummedToken1 === outputCurrencyId)
       )
     })
-  }, [stableFarms, inputCurrencyId, outputCurrencyId])
+  }, [stablePairs, inputCurrencyId, outputCurrencyId])
 
   const currencies: { [field in Field]?: Currency } = useMemo(
     () => ({
@@ -206,6 +217,8 @@ export default function SwapForm() {
     }
   }, [hasAmount, refreshBlockNumber])
 
+  const [onPresentSettingsModal] = useModal(<SettingsModal mode={SettingsMode.SWAP_LIQUIDITY} />)
+
   return (
     <>
       <CurrencyInputHeader
@@ -230,9 +243,14 @@ export default function SwapForm() {
             otherCurrency={currencies[Field.OUTPUT]}
             id="swap-currency-input"
             showCommonBases
-            showBUSD={!!tokenMap[chainId]?.[inputCurrencyId] || inputCurrencyId === NATIVE[chainId]?.symbol}
+            showUSDPrice={!!tokenMap[chainId]?.[inputCurrencyId] || inputCurrencyId === NATIVE[chainId]?.symbol}
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
           />
+          {isAccessTokenSupported && inputCurrency?.isToken && (
+            <Box>
+              <AccessRisk token={inputCurrency} />
+            </Box>
+          )}
 
           <AutoColumn justify="space-between">
             <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
@@ -261,13 +279,13 @@ export default function SwapForm() {
             otherCurrency={currencies[Field.INPUT]}
             id="swap-currency-output"
             showCommonBases
-            showBUSD={!!tokenMap[chainId]?.[outputCurrencyId] || outputCurrencyId === NATIVE[chainId]?.symbol}
+            showUSDPrice={!!tokenMap[chainId]?.[outputCurrencyId] || outputCurrencyId === NATIVE[chainId]?.symbol}
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
           />
 
-          {isAccessTokenSupported && (
+          {isAccessTokenSupported && outputCurrency?.isToken && (
             <Box>
-              <AccessRisk inputCurrency={currencies[Field.INPUT]} outputCurrency={currencies[Field.OUTPUT]} />
+              <AccessRisk token={outputCurrency} />
             </Box>
           )}
 
@@ -300,6 +318,7 @@ export default function SwapForm() {
                 )
               }
               allowedSlippage={allowedSlippage}
+              onSlippageClick={onPresentSettingsModal}
             />
           )}
         </AutoColumn>

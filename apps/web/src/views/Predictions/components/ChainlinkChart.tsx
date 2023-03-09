@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, Dot } from 'recharts'
 import useTheme from 'hooks/useTheme'
-import { LineChartLoader } from 'views/Info/components/ChartLoaders'
+import { LineChartLoader } from 'components/ChartLoaders'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSWRContract, useSWRMulticall } from 'hooks/useSWRContract'
 import useSWRImmutable from 'swr/immutable'
@@ -107,7 +107,7 @@ const ChainlinkChartWrapper = styled(Flex)<{ isMobile?: boolean }>`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background: ${({ theme, isMobile }) => (isMobile ? theme.card.background : theme.colors.gradients.bubblegum)};
+  background: ${({ theme, isMobile }) => (isMobile ? theme.card.background : theme.colors.gradientBubblegum)};
 `
 
 const HoverData = ({ rounds }: { rounds: { [key: string]: NodeRound } }) => {
