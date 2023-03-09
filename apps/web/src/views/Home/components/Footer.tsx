@@ -91,8 +91,7 @@ const Footer = () => {
           <StyledSunburst />
         </Flex>
       </BgWrapper>
-      {(isTablet || isDesktop) && (
-             )}
+
       <Wrapper>
         <Heading mb="24px" scale="xl" color="white">
           {t('Start in seconds.')}
