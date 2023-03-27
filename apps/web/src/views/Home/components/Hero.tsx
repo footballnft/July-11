@@ -127,13 +127,13 @@ const Hero = () => {
       >
         <Flex flex="1" flexDirection="column">
           <Heading scale="xxl" color="secondary" mb="24px">
-            {t('Buy crypto with fiat without KYC.')}
+            {t('Uniswap’s fiat-to-crypto on-ramp service best alternative.')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('Welcome to AmehSwap, here you buy cryptocurrencies using fiat currency without the need for any Know Your Customer (KYC) verification. Our platform is a fork of Pancakeswap, ensuring that your transactions are secure, fast and anonymous. You can buy crypto with credit cards, apple pay and google pay.')}
+            {t('Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not. Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('NB: NO KYC, ONLY APPLIES TO TRANSACTIONS OF $50 (OR ITS EQUIVALENTS) AND BELOW')}
+            {t('NB: No KYC, only applies to transactions of $50 (or it equivalent) and below')}
           </Heading>
           <Flex>
             {!account && <ConnectWalletButton mr="8px" />}

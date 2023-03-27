@@ -176,6 +176,11 @@ const config: (
           href: '/info',
         },
         {
+          label: t('Blog'),
+          href: 'https://medium.com/@amehswap',
+          type: DropdownMenuItemType.EXTERNAL_LINK,
+         },
+        {
          // label: t('IFO'),
          // href: '/ifo',
           supportChainIds: SUPPORT_ONLY_BSC,
@@ -198,11 +203,6 @@ const config: (
         },
         {
          // type: DropdownMenuItemType.DIVIDER,
-        },
-        {
-         // label: t('Blog'),
-         // href: 'https://medium.com/pancakeswap',
-         // type: DropdownMenuItemType.EXTERNAL_LINK,
         },
         {
          // label: t('Docs'),
