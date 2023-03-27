@@ -130,7 +130,7 @@ const Hero = () => {
             {t('Amehswap: Where Fiat Meets Crypto with Ease')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not. Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
+            {t('We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not.')}
           </Heading>
           <Heading scale="md" mb="24px">
             {t('Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
