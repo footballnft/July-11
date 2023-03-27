@@ -127,13 +127,16 @@ const Hero = () => {
       >
         <Flex flex="1" flexDirection="column">
           <Heading scale="xxl" color="secondary" mb="24px">
-            {t('Uniswap’s fiat-to-crypto on-ramp service best alternative.')}
+            {t('Amehswap: Where Fiat Meets Crypto with Ease')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not. Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
+            {t('We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not. Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
           </Heading>
           <Heading scale="md" mb="24px">
-            {t('NB: No KYC, only applies to transactions of $50 (or it equivalent) and below')}
+            {t('Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange.')}
+          </Heading>
+          <Heading scale="md" mb="24px">
+            {t('NB: The exemption from KYC requirements is limited to transactions of $50 or less (or its equivalent)')}
           </Heading>
           <Flex>
             {!account && <ConnectWalletButton mr="8px" />}
