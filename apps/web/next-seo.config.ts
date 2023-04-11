@@ -1,19 +1,19 @@
 import { DefaultSeoProps } from 'next-seo'
 
 export const SEO: DefaultSeoProps = {
-  titleTemplate: '%s | AmehSwap',
-  defaultTitle: 'AmehSwap',
+  titleTemplate: '%s | PancakeSwap',
+  defaultTitle: 'PancakeSwap',
   description:
-    'Experience the freedom and security of buying cryptocurrencies without the hassle of KYC!',
+    'Cheaper and faster than Uniswap? Discover PancakeSwap, the leading DEX on BNB Smart Chain (BSC) with the best farms in DeFi and a lottery for CAKE.',
   twitter: {
     cardType: 'summary_large_image',
-    handle: '@AmehSwap',
-    site: '@AmehSwap',
+    handle: '@PancakeSwap',
+    site: '@PancakeSwap',
   },
   openGraph: {
-    title: '🥞 AmehSwap - The best fiat to crypto DEX',
+    title: '🥞 PancakeSwap - A next evolution DeFi exchange on BNB Smart Chain (BSC)',
     description:
-      'Experience the freedom and security of buying cryptocurrencies without the hassle of KYC! With AmehSwap, you easily purchase your favorite coins and tokens anonymously. No more waiting for credit checks or dealing with government regulations. Join the decentralized revolution and take control of your financial future today!',
-    images: [{ url: 'https://amehswap.com/images/ameh-hero.png' }],
+      'The most popular AMM on BSC by user count! Earn CAKE through yield farming or win it in the Lottery, then stake it in Syrup Pools to earn more tokens! Initial Farm Offerings (new token launch model pioneered by PancakeSwap), NFTs, and more, on a platform you can trust.',
+    images: [{ url: 'https://assets.pancakeswap.finance/web/og/hero.jpg' }],
   },
 }

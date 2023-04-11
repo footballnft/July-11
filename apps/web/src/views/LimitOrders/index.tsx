@@ -347,6 +347,25 @@ const LimitOrders = () => {
         mb={isSideFooter ? null : '24px'}
         mt={isChartExpanded ? '24px' : null}
       >
+        {isDesktop && (
+          <Flex width={isChartExpanded ? '100%' : '50%'} maxWidth="928px" flexDirection="column">
+            <PriceChartContainer
+              inputCurrencyId={currencyIds.input}
+              inputCurrency={currencies.input}
+              outputCurrencyId={currencyIds.output}
+              outputCurrency={currencies.output}
+              isChartExpanded={isChartExpanded}
+              setIsChartExpanded={setIsChartExpanded}
+              isChartDisplayed={isChartDisplayed}
+              currentSwapPrice={singleTokenPrice}
+              isFullWidthContainer
+            />
+            {isChartDisplayed && <Box mb="48px" />}
+            <Box width="100%">
+              <LimitOrderTable isCompact={isTablet} />
+            </Box>
+          </Flex>
+        )}
         <Flex flexDirection="column" alignItems="center">
           <StyledSwapContainer $isChartExpanded={false}>
             <StyledInputCurrencyWrapper>

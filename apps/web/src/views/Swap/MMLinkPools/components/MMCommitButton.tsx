@@ -1,6 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency, CurrencyAmount, TradeType } from '@pancakeswap/sdk'
 import { Button, Column, useModal } from '@pancakeswap/uikit'
+import { logGTMClickSwapEvent } from 'utils/customGTMEventTracking'
 
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -14,7 +15,6 @@ import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { Field } from 'state/swap/actions'
 import ProgressSteps from '../../components/ProgressSteps'
 import { SwapCallbackError } from '../../components/styleds'
-import { SAFE_MM_QUOTE_EXPIRY_SEC } from '../constants'
 import { useSwapCallArguments } from '../hooks/useSwapCallArguments'
 import { useSwapCallback } from '../hooks/useSwapCallback'
 import { MMRfqTrade, TradeWithMM } from '../types'
@@ -48,7 +48,7 @@ interface SwapCommitButtonPropsType {
   mmQuoteExpiryRemainingSec?: number | null
 }
 
-export default function MMSwapCommitButton({
+export function MMSwapCommitButton({
   swapIsUnsupported,
   account,
   showWrap,
@@ -65,7 +65,6 @@ export default function MMSwapCommitButton({
   currencyBalances,
   recipient,
   onUserInput,
-  mmQuoteExpiryRemainingSec = null,
 }: SwapCommitButtonPropsType) {
   const { t } = useTranslation()
   // the callback to execute the swap
@@ -142,11 +141,11 @@ export default function MMSwapCommitButton({
       swapErrorMessage={swapErrorMessage || (!rfqTrade.trade && t('Unable request a quote'))}
       customOnDismiss={handleConfirmDismiss}
       openSettingModal={onPresentSettingsModal}
-      isRFQReady={Boolean(rfqTrade.rfq) && !rfqTrade.isLoading && mmQuoteExpiryRemainingSec >= SAFE_MM_QUOTE_EXPIRY_SEC}
+      isRFQReady={Boolean(rfqTrade.rfq) && !rfqTrade.isLoading}
     />,
     true,
     true,
-    'confirmSwapModal',
+    'MMconfirmSwapModal',
   )
   // End Modals
 
@@ -162,6 +161,7 @@ export default function MMSwapCommitButton({
       })
       onPresentConfirmModal()
     }
+    logGTMClickSwapEvent()
   }, [isExpertMode, handleSwap, onPresentConfirmModal, rfqTrade])
 
   // useEffect

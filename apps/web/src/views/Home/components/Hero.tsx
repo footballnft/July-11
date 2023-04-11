@@ -127,7 +127,7 @@ const Hero = () => {
       >
         <Flex flex="1" flexDirection="column">
           <Heading scale="xxl" color="secondary" mb="24px">
-            {t('Amehswap: Where Fiat Meets Crypto with Ease')}
+            {t('Amehswap: Where Fiat Meets Crypto with Ease.')}
           </Heading>
           <Heading scale="md" mb="24px">
             {t('We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not.')}

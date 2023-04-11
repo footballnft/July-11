@@ -1,15 +1,6 @@
 import { Language } from "../LangSelector/types";
 import { FooterLinkType } from "./types";
-import {
-  TwitterIcon,
-  TelegramIcon,
-  RedditIcon,
-  InstagramIcon,
-  GithubIcon,
-  DiscordIcon,
-  MediumIcon,
-  YoutubeIcon,
-} from "../Svg";
+import { TwitterIcon, TelegramIcon, RedditIcon, InstagramIcon, GithubIcon, DiscordIcon, MediumIcon, YoutubeIcon } from "../Svg";
 
 export const footerLinks: FooterLinkType[] = [
   {
@@ -182,9 +173,9 @@ export const socials = [
     href: "",
   },
   {
-    label: "",
+    label: "Medium",
     icon: MediumIcon,
-    href: "",
+    href: "https://medium.com/@amehswap",
   },
   {
     label: "",

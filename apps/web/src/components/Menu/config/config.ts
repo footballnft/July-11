@@ -68,12 +68,6 @@ const config: (
           href: '/swap',
         },
         {
-          label: t('Limit'),
-          href: '/limit-orders',
-          supportChainIds: SUPPORT_ONLY_BSC,
-            image: '/images/decorations/3d-coin.png',
-        },
-        {
           label: t('Liquidity'),
           href: '/liquidity',
         },
@@ -84,12 +78,19 @@ const config: (
             languageCode,
             isDark,
           }),
+          confirmModalId: 'usCitizenConfirmModal',
           type: DropdownMenuItemType.EXTERNAL_LINK,
         },
         {
           label: t('Bridge'),
           href: 'https://bridge.pancakeswap.finance/',
           type: DropdownMenuItemType.EXTERNAL_LINK,
+        },
+        {
+          label: `${t('Limit')} (V2)`,
+          href: '/limit-orders',
+          supportChainIds: SUPPORT_ONLY_BSC,
+          image: '/images/decorations/3d-coin.png',
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
     },
@@ -98,7 +99,7 @@ const config: (
       href: '/farms',
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
-        image: '/images/decorations/pe2.png',
+      image: '/images/decorations/pe2.png',
       items: [
         {
           label: t('Farms'),
@@ -107,7 +108,7 @@ const config: (
         {
           label: t('Pools'),
           href: '/pools',
-            supportChainIds: SUPPORT_ONLY_BSC,
+          supportChainIds: SUPPORT_ONLY_BSC,
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
     },
@@ -149,7 +150,7 @@ const config: (
       icon: NftIcon,
       fillIcon: NftFillIcon,
       supportChainIds: SUPPORT_ONLY_BSC,
-        image: '/images/decorations/nft.png',
+      image: '/images/decorations/nft.png',
       items: [
         {
           label: t('Overview'),
@@ -173,7 +174,7 @@ const config: (
       items: [
         {
           label: t('Info'),
-          href: '/info',
+          href: '/info/v3',
         },
         {
           label: t('Blog'),
@@ -185,6 +186,10 @@ const config: (
          // href: '/ifo',
           supportChainIds: SUPPORT_ONLY_BSC,
           image: '/images/ifos/ifo-bunny.png',
+        },
+        {
+         // label: t('Affiliate Program'),
+         // href: '/affiliates-program',
         },
         {
          // label: t('Voting'),
