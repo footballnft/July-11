@@ -13,9 +13,9 @@ import { getActivePools } from 'utils/calls'
 import cakeVaultAbi from 'config/abi/cakeVaultV2.json'
 import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
 import { convertSharesToCake } from '../../../../views/Pools/helpers'
-import { getScores } from '../../../../views/Voting/getScores'
-import { PANCAKE_SPACE } from '../../../../views/Voting/config'
-import * as strategies from '../../../../views/Voting/strategies'
+import { getScores } from '../../../../views/Buy/getScores'
+import { PANCAKE_SPACE } from '../../../../views/Buy/config'
+import * as strategies from '../../../../views/Buy/strategies'
 
 const useCakeBenefits = () => {
   const { address: account } = useAccount()
