@@ -51,7 +51,7 @@ const LimitOrders = () => {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
   const router = useRouter()
-  const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
+  const { isMobile, isDesktop } = useMatchBreakpoints()
   const { theme } = useTheme()
   const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
   const [isChartExpanded, setIsChartExpanded] = useState(false)

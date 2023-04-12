@@ -36,7 +36,6 @@ import useStableConfig, {
 import { useMemo, useState } from 'react'
 import { V2PairCard } from 'views/AddLiquidityV3/components/V2PairCard'
 import { StablePairCard } from 'views/AddLiquidityV3/components/StablePairCard'
-import FarmV3MigrationBanner from 'views/Home/components/Banners/FarmV3MigrationBanner'
 import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import { LiquidityCardRow } from 'components/LiquidityCardRow'
 import atomWithStorageWithErrorCatch from 'utils/atomWithStorageWithErrorCatch'
@@ -190,9 +189,6 @@ export default function PoolListPage() {
 
   return (
     <Page>
-      <Flex m="24px 0" maxWidth="854px">
-        <FarmV3MigrationBanner />
-      </Flex>
       <AppBody
         style={{
           maxWidth: '854px',
