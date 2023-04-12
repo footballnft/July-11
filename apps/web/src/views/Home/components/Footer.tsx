@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex, Heading, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, Heading, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useAccount } from 'wagmi'
@@ -82,7 +82,6 @@ const bottomRightImage = {
 const Footer = () => {
   const { t } = useTranslation()
   const { address: account } = useAccount()
-  const { isTablet, isDesktop } = useMatchBreakpoints()
 
   return (
     <>

@@ -6,7 +6,7 @@ import { ASSET_CDN } from './endpoints'
 export const DEFAULT_META: PageMeta = {
   title: 'AmehSwap',
   description:
-    'We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, Amehswap does not. Amehswap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange!',
+    'We are Uniswap’s fiat-to-crypto on-ramp service best alternative. Uniswap’s fiat-to-crypto on-ramp service requires KYC, AmehSwap does not. AmehSwap provides the most seamless fiat-to-crypto on-ramp service for users to easily convert their fiat currency into cryptocurrencies on a decentralized exchange!',
   image: 'https://amehswap.com/images/ameh-hero.png',
 }
 
