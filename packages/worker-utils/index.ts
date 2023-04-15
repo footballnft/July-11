@@ -3,9 +3,11 @@ export const CORS_ALLOW = [
   /\.pancakeswap\.finance$/,
   /\.pancakeswap\.com$/,
   /\.amehswap\.com$/,
+  /\.july-11.vercel\.app$/,
   'https://pancakeswap.finance',
   'https://pancakeswap.com',
   'https://amehswap.com',
+  'https://july-11.vercel.app',
   /^http:\/\/localhost(:\d+)?$/,
 ]
 
