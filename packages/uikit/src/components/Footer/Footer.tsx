@@ -12,8 +12,11 @@ import {
   StyledText,
   StyledToolsContainer,
 } from "./styles";
+
+import { Button } from "../Button";
+import CakePrice from "../CakePrice/CakePrice";
 import LangSelector from "../LangSelector/LangSelector";
-import { LogoWithTextIcon } from "../Svg";
+import { ArrowForwardIcon, LogoWithTextIcon } from "../Svg";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { FooterProps } from "./types";
 import { SkeletonV2 } from "../Skeleton";

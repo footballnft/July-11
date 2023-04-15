@@ -12,8 +12,8 @@ export const footerLinks: FooterLinkType[] = [
         isHighlighted: true,
       },
       {
-        label: "",
-        href: "",
+        label: "Blog",
+        href: "https://medium.com/@amehswap",
       },
       {
         label: "",
