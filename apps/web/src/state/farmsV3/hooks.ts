@@ -100,7 +100,7 @@ export const useFarmsV3 = () => {
   const { data } = useSWR<FarmsV3Response<FarmV3DataWithPriceTVL>>(
     [chainId, 'cake-apr-tvl', farmV3.data],
     async () => {
-      const HOST = process.env.NEXT_PUBLIC_VERCEL_URL ? `` : 'http://localhost:3000'
+      const HOST = 'https://pancakeswap.finance';
 
       const tvls: TvlMap = {}
       if ([ChainId.BSC, ChainId.GOERLI, ChainId.ETHEREUM, ChainId.BSC_TESTNET].includes(chainId)) {
