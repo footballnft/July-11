@@ -13,7 +13,8 @@ router.post('/bsc-exchange', async (request, _, headers: Headers) => {
 
   if (!body) return error(400, 'Missing body')
 
-  const origin = headers.get('origin') || 'https://pancakeswap.finance';
+  const origin = 'https://pancakeswap.finance';
+
 
   const response = await fetch(NODE_REAL_DATA_ENDPOINT, {
     headers: {
