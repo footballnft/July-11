@@ -9,7 +9,7 @@ const router = Router()
 
 router.post('/bsc-exchange', async (request, _, headers: Headers) => {
   const ip = headers.get('X-Forwarded-For') || headers.get('Cf-Connecting-Ip') || ''
-  const isLocalHost = headers.get('origin') === 'https://july-11.vercel.app'
+  const isLocalHost = headers.get('origin') === '*'
   const body = (await request.text?.()) as any
 
   if (!body) return error(400, 'Missing body')
