@@ -47,16 +47,20 @@ export const handleCors = (allowedOrigin: any, methods: string, headers: string)
   const isAllowed = isOriginAllowed(reqOrigin, allowedOrigin)
   if (isAllowed && reqOrigin) {
     const corsHeaders = {
-      'Access-Control-Allow-Origin': reqOrigin,
       'Access-Control-Allow-Methods': methods,
       'Access-Control-Allow-Headers': headers,
     }
     // Handle CORS pre-flight request.
+    if (request.method === 'OPTIONS') {
     return new Response(null, {
       status: 204,
       headers: corsHeaders,
     })
   }
+  // Call wrapCorsHeader to set the Access-Control-Allow-Origin header.
+  const response = await fetch(request)
+  return wrapCorsHeader(request, response, { allowedOrigin })
+}
   console.info('Origin not allowed on handleCors', reqOrigin)
   // Handle standard OPTIONS request.
   return new Response(null, {
