@@ -1,4 +1,5 @@
 export const CORS_ALLOW = [
+  'https://july-11.vercel.app',
   /\.pancake\.run$/,
   /\.pancakeswap\.finance$/,
   /\.pancakeswap\.com$/,
