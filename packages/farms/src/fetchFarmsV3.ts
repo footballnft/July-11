@@ -27,7 +27,7 @@ export async function farmV3FetchFarms({
 }) {
   const [poolInfos, cakePrice, v3PoolData] = await Promise.all([
     fetchPoolInfos(farms, chainId, multicallv2, masterChefAddress),
-    (await fetch('https://ameh-server.vercel.app/https://farms-api.pancakeswap.com/price/cake')).json(),
+    (await fetch('https://farms-api.pancakeswap.com/price/cake')).json(),
     fetchV3Pools(farms, chainId, multicallv2),
   ])
 
