@@ -4,6 +4,7 @@ import { CAKE } from '@pancakeswap/tokens'
 import { tickToPrice } from '@pancakeswap/v3-sdk'
 import BN from 'bignumber.js'
 import { BigNumber, FixedNumber } from 'ethers'
+import axios from 'axios'
 import { BIG_ZERO } from '@pancakeswap/utils/bigNumber'
 import chunk from 'lodash/chunk'
 import { DEFAULT_COMMON_PRICE, PriceHelper } from '../constants/common'
@@ -27,7 +28,7 @@ export async function farmV3FetchFarms({
 }) {
   const [poolInfos, cakePrice, v3PoolData] = await Promise.all([
     fetchPoolInfos(farms, chainId, multicallv2, masterChefAddress),
-    (await fetch('https://farms-api.pancakeswap.com/price/cake')).json(),
+    axios.get("/api/cors-proxy").then(response => response.json()),
     fetchV3Pools(farms, chainId, multicallv2),
   ])
 
