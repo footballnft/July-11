@@ -28,7 +28,7 @@ export async function farmV3FetchFarms({
 }) {
   const [poolInfos, cakePrice, v3PoolData] = await Promise.all([
     fetchPoolInfos(farms, chainId, multicallv2, masterChefAddress),
-    axios.get("/api/cors-proxy").then(response => response.json()),
+    axios.get("/api/cors-proxy").then(response => response.data),
     fetchV3Pools(farms, chainId, multicallv2),
   ])
 
